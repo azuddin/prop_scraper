@@ -6,9 +6,15 @@ import (
 	"strings"
 	"io/ioutil"
 	"encoding/json"
+	"gopkg.in/mgo.v2"
 )
 
 func main() {
+	session, _ := mgo.Dial("127.0.0.1")
+	c := session.DB("scraper").C("iprop")
+	
+  // session.SetMode(mgo.Monotonic, true)
+  defer session.Close()
 
 	data := `{
     "operationName": null,
@@ -74,7 +80,10 @@ func main() {
 
 	Items := formattedData.Data.ACSListing.Items
 
-	for i, item := range Items {
-		fmt.Printf("id: %d -- %s \n\n", i, item)
+	for _, item := range Items {
+		// fmt.Printf("id: %d -- %s \n\n", i, item)
+
+    insert := c.Insert(item)
+    fmt.Println(insert)
 	}
 }
