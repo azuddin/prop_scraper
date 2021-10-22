@@ -11,7 +11,7 @@ type iPropertyDatum struct {
 type iPropertyACSListing struct {
 	Items []iPropertyItem `json:"items"`
 	TotalCount int `json:"totalCount"`
-	NextPageToken int `json:"nextPageToken"`
+	NextPageToken string `json:"nextPageToken"`
 }
 
 type iPropertyItem struct {
